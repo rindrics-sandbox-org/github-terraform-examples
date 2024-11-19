@@ -89,7 +89,7 @@ jobs:
       - name: Create .tfvars files from repo secrets
         run: |
           set +x
-          echo "pem_file = <<EOT" > pem.tfvars
+          echo "pem_content = <<EOT" > pem.tfvars
           echo "${{ secrets.< Terraform Apply用に作成したGitHub AppのPRIVATE KEYの値を設定したSecret key > }}" >> pem.tfvars
           echo "EOT" >> pem.tfvars
           set -x
