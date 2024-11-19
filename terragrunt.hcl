@@ -10,15 +10,26 @@ generate "backend" {
   EOF
 }
 
-generate "provider" {
-  path = "provider.tf"
+generate "terraform" {
+  path = "terraform.tf"
   if_exists = "overwrite_terragrunt"
   contents = <<-EOF
-    provider "github" {
-    owner = "rindrics-sandbox-org"
-    app_auth {
-        pem_file = var.pem_content
+    terraform {
+      required_version = "~> 1.9.5" # be consistent with `.terraform-version`
+
+      required_providers {
+        github = {
+          source  = "integrations/github"
+          version = "~> 6.3"
+        }
+      }
     }
-  }
+
+    provider "github" {
+      owner = "rindrics-sandbox-org"
+      app_auth {
+          pem_file = var.pem_content
+      }
+    }
   EOF
 }

@@ -1,15 +1,3 @@
-# Terraform とプロバイダーのバージョン情報を記載
-terraform {
-  required_version = "~> 1.9.5" # be consistent with `.terraform-version`
-
-  required_providers {
-    github = {
-      source  = "integrations/github"
-      version = "~> 6.3"
-    }
-  }
-}
-
 locals {
   users_usernames     = [for user in var.users : user.username]                # user.tfvars から username を取得
   org_owner_usernames = setintersection(local.users_usernames, var.org_owners) # Organization owner の username

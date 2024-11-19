@@ -38,4 +38,4 @@ terraform.rc
 *.tfvars
 .env
 backend.tf
-provider.tf
+terraform.tf
