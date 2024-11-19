@@ -48,7 +48,7 @@ jobs:
 
       - name: Initialize Terraform environment
         run: |
-          make prepare GITHUB_ACTIONS=true APP_ID=${{ vars.TERRAFORM_APPLY_PRIVATE_KEY > }} APP_INSTALLATION_ID=${{ vars.TERRAFORM_APPLY_INSTALLATION_ID }}
+          make prepare GITHUB_ACTIONS=true APP_ID=${{ vars.TERRAFORM_APPLY_APP_ID }} APP_INSTALLATION_ID=${{ vars.TERRAFORM_APPLY_INSTALLATION_ID }}
 
       - name: Setup tfcmt
         uses: shmokmt/actions-setup-tfcmt@v2

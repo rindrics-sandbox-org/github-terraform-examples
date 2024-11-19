@@ -49,7 +49,7 @@ resource "github_membership" "org_owner" {
 resource "github_repository" "terraform_operations" {
   name                   = "terraform-operations"
   description            = "Organization 配下のリソースを管理する Terraform ソースの置き場所"
-  visibility             = "private"
+  visibility             = "public"
   allow_auto_merge       = false
   allow_merge_commit     = true
   allow_rebase_merge     = true
@@ -63,17 +63,6 @@ resource "github_repository" "terraform_operations" {
   homepage_url           = null
   is_template            = false
   vulnerability_alerts   = true
-  security_and_analysis {
-    advanced_security {
-      status = "disabled"
-    }
-    secret_scanning {
-      status = "disabled"
-    }
-    secret_scanning_push_protection {
-      status = "disabled"
-    }
-  }
 }
 
 # tfstate ファイルを管理するリポジトリの作成（ terraform-state-files ）
@@ -96,17 +85,6 @@ resource "github_repository" "terraform_state_files" {
   homepage_url           = null
   is_template            = false
   vulnerability_alerts   = true
-  security_and_analysis {
-    advanced_security {
-      status = "disabled"
-    }
-    secret_scanning {
-      status = "disabled"
-    }
-    secret_scanning_push_protection {
-      status = "disabled"
-    }
-  }
 }
 
 # ユーザーの GitHub Username と GitHub ID のチェック
