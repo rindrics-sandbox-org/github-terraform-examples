@@ -1,19 +1,19 @@
 generate "backend" {
-  path = "backend.tf"
+  path      = "backend.tf"
   if_exists = "overwrite_terragrunt"
-  contents = <<-EOF
+  contents  = <<-EOF
     terraform {
       backend "local" {
-          path = "./terraform.tfstate"
+        path = "./terraform.tfstate"
       }
     }
   EOF
 }
 
 generate "terraform" {
-  path = "terraform.tf"
+  path      = "terraform.tf"
   if_exists = "overwrite_terragrunt"
-  contents = <<-EOF
+  contents  = <<-EOF
     terraform {
       required_version = "~> 1.9.5" # be consistent with `.terraform-version`
 
@@ -28,7 +28,7 @@ generate "terraform" {
     provider "github" {
       owner = "rindrics-sandbox-org"
       app_auth {
-          pem_file = var.pem_content
+        pem_file = var.pem_content
       }
     }
   EOF
@@ -36,7 +36,7 @@ generate "terraform" {
 
 terraform {
   extra_arguments "common_variables" {
-    commands= get_terraform_commands_that_need_vars()
+    commands = get_terraform_commands_that_need_vars()
     required_var_files = [
       "${path_relative_from_include()}/pem.tfvars",
       "${path_relative_from_include()}/users.tfvars",

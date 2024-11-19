@@ -38,7 +38,7 @@ apply-force: plan-with-lock
 
 format:  # useful in local development
 	@cd $(DIR) && \
-	$(TERRAFORM) fmt -diff -recursive
+	$(TERRAFORM) hclfmt -diff -recursive
 
 format-check:
 	@cd $(DIR) && \
