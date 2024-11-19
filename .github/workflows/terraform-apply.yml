@@ -48,7 +48,7 @@ jobs:
 
       - name: Initialize Terraform environment
         run: |
-          make prepare GITHUB_ACTIONS=true APP_ID=${{ vars.< Terraform Apply用に作成したGitHub AppのAPP IDの値を設定したSecret key > }} APP_INSTALLATION_ID=${{ vars.< Terraform Apply用に作成したGitHub AppのINSTALLATION IDの値を設定したSecret key > }}
+          make prepare GITHUB_ACTIONS=true APP_ID=${{ vars.TERRAFORM_APPLY_PRIVATE_KEY > }} APP_INSTALLATION_ID=${{ vars.TERRAFORM_APPLY_INSTALLATION_ID }}
 
       - name: Setup tfcmt
         uses: shmokmt/actions-setup-tfcmt@v2
@@ -59,8 +59,8 @@ jobs:
         id: generate_token
         uses: actions/create-github-app-token@v1
         with:
-          app-id: ${{ vars.< Terraform Apply用に作成したGitHub AppのAPP IDの値を設定したSecret key > }}
-          private-key: ${{ secrets.< Terraform Apply用に作成したGitHub AppのPRIVATE KEYの値を設定したSecret key > }}
+          app-id: ${{ vars.TERRAFORM_APPLY_APP_ID }}
+          private-key: ${{ secrets.TERRAFORM_APPLY_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
 
       - name: Download Terraform state file
@@ -72,7 +72,7 @@ jobs:
               -H "X-GitHub-Api-Version: 2022-11-28" \
               -o terraform.tfstate.response \
               -w "%{http_code}" \
-              https://api.github.com/repos/< Organization Name >/< tfstateファイルを管理するリポジトリの作成（ terraform-state-files ） >/contents/terraform.tfstate > response_code
+              https://api.github.com/repos/rindrics-sandox-org/terraform-state-files/contents/terraform.tfstate > response_code
           HTTP_CODE=$(cat response_code)
 
           if [ "$HTTP_CODE" -eq 200 ]; then
@@ -90,7 +90,7 @@ jobs:
         run: |
           set +x
           echo "pem_content = <<EOT" > pem.tfvars
-          echo "${{ secrets.< Terraform Apply用に作成したGitHub AppのPRIVATE KEYの値を設定したSecret key > }}" >> pem.tfvars
+          echo "${{ secrets.TERRAFORM_APPLY_PRIVATE_KEY }}" >> pem.tfvars
           echo "EOT" >> pem.tfvars
           set -x
 
@@ -111,8 +111,8 @@ jobs:
       - name: Execute `terraform apply`
         shell: bash
         run: |
-            git config --global url."https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/< Organization Name >".insteadOf "ssh://git@github.com/< Organization Name >"
-            tfcmt --config tfcmt.yml apply -- make apply-force GITHUB_ACTIONS=true APP_ID=${{ vars.< Terraform Apply用に作成したGitHub AppのAPP IDの値を設定したSecret key > }} APP_INSTALLATION_ID=${{ vars.< Terraform Apply用に作成したGitHub AppのINSTALLATION IDの値を設定したSecret key > }}
+            git config --global url."https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/rindrics-sandox-org".insteadOf "ssh://git@github.com/rindrics-sandox-org"
+            tfcmt --config tfcmt.yml apply -- make apply-force GITHUB_ACTIONS=true APP_ID=${{ vars.TERRAFORM_APPLY_APP_ID }} APP_INSTALLATION_ID=${{ vars.TERRAFORM_APPLY_INSTALLATION_ID }}
         continue-on-error: true  # necessary to upload state file in case of `apply` error
         env:
             GITHUB_TOKEN: ${{ github.token }}
@@ -141,5 +141,5 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ steps.generate_token.outputs.token }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/< Organization Name >/< tfstateファイルを管理するリポジトリの作成（ terraform-state-files ） >/contents/terraform.tfstate \
+            https://api.github.com/repos/rindrics-sandox-org/terraform-state-files/contents/terraform.tfstate \
             -d @"payload.json"

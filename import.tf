@@ -4,13 +4,13 @@
 # `<Organization Name>` と `< GitHub Username >` 部分は適切な値に置き換えてください。
 import {
   to = github_repository.terraform_operations
-  id = "terraform-operations"
+  id = "github-terraform-examples"
 }
 import {
   to = github_repository.terraform_state_files
   id = "terraform-state-files"
 }
 import {
-  to = github_membership.org_owner["< GitHub Username >"]
-  id = "<Organization Name>:< GitHub Username >"
+  to = github_membership.org_owner["Rindrics"]
+  id = "rindrics-sandbox-org:Rindrics"
 }

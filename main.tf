@@ -17,7 +17,7 @@ terraform {
 # 構築するリソースのプロバイダー情報を記載
 # `< Organization Name >` 部分は適切な Organization Name に置き換えてください。
 provider "github" {
-  owner = "< Organization Name >"
+  owner = "rindrics-sandbox-org"
   app_auth {
     pem_file = var.pem_content
   }

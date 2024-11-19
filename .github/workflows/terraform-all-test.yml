@@ -57,5 +57,5 @@ jobs:
 
       - name: Terraform Lint
         run: |
-          git config --global url."https://x-access-token:${READ_REPO_TOKEN}@github.com/< Organization Name >".insteadOf "ssh://git@github.com/< Organization Name >"
+          git config --global url."https://x-access-token:${READ_REPO_TOKEN}@github.com/rindrics-sandbox-org".insteadOf "ssh://git@github.com/rindrics-sandbox-org"
           make lint TFLINT=$PWD/bin/tflint
