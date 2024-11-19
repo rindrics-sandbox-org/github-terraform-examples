@@ -1,4 +1,4 @@
-TERRAFORM ?= terraform
+TERRAFORM ?= terragrunt run-all
 TFLINT ?= tflint
 DIR ?= .
 APP_ID = ""  # will be set in GitHub Actions
@@ -35,7 +35,7 @@ apply-force: plan-with-lock
 	@cd $(DIR) && \
 	$(if $(filter true,$(GITHUB_ACTIONS)), export GITHUB_APP_ID=$(APP_ID) && \
 	export GITHUB_APP_INSTALLATION_ID=$(APP_INSTALLATION_ID) && ,) \
-	$(TERRAFORM) apply -no-color -lock=true $(TERRAFORM_PLAN_PATH)
+	$(TERRAFORM) apply -no-color -lock=true $(TERRAFORM_PLAN_PATH) --terragrunt-non-interactive
 
 format:  # useful in local development
 	@cd $(DIR) && \
