@@ -62,7 +62,7 @@ jobs:
               -H "X-GitHub-Api-Version: 2022-11-28" \
               -o terraform.tfstate.response \
               -w "%{http_code}" \
-              https://api.github.com/repos/< Organization Name >/< tfstateファイルを管理するリポジトリの作成（ terraform-state-files ） >/contents/terraform.tfstate > response_code
+              https://api.github.com/repos/rindrics-sandox-org/< tfstateファイルを管理するリポジトリの作成（ terraform-state-files ） >/contents/terraform.tfstate > response_code
           HTTP_CODE=$(cat response_code)
 
           if [ "$HTTP_CODE" -eq 200 ]; then
@@ -87,7 +87,7 @@ jobs:
       - name: Terraform Plan
         id: terraform_plan
         run: |
-          git config --global url."https://x-access-token:${READ_REPO_TOKEN}@github.com/< Organization Name >".insteadOf "ssh://git@github.com/< Organization Name >"
+          git config --global url."https://x-access-token:${READ_REPO_TOKEN}@github.com/rindrics-sandox-org".insteadOf "ssh://git@github.com/rindrics-sandox-org"
           tfcmt --config tfcmt.yml plan -- make plan GITHUB_ACTIONS=true APP_ID=${{ vars.TERRAFORM_PLAN_APP_ID }} APP_INSTALLATION_ID=${{ vars.TERRAFORM_PLAN_INSTALLATION_ID }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
