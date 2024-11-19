@@ -5,7 +5,7 @@
 ci:
   owner:
   - type: envsubst
-    value: < Organization Name >
+    value: rindrics-sandbox-org
   repo:
   - type: envsubst
     value: terraform-operations

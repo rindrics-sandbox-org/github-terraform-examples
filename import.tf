@@ -12,5 +12,5 @@ import {
 }
 import {
   to = github_membership.org_owner["< GitHub Username >"]
-  id = "<Organization Name>:< GitHub Username >"
+  id = "rindrics-sandbox-org:< GitHub Username >"
 }
