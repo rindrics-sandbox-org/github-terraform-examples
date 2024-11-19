@@ -14,15 +14,6 @@ terraform {
   }
 }
 
-# 構築するリソースのプロバイダー情報を記載
-# `< Organization Name >` 部分は適切な Organization Name に置き換えてください。
-provider "github" {
-  owner = "rindrics-sandbox-org"
-  app_auth {
-    pem_file = var.pem_content
-  }
-}
-
 locals {
   users_usernames     = [for user in var.users : user.username]                # user.tfvars から username を取得
   org_owner_usernames = setintersection(local.users_usernames, var.org_owners) # Organization owner の username
