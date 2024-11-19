@@ -45,13 +45,13 @@ jobs:
         id: generate_token
         uses: actions/create-github-app-token@v1
         with:
-          app-id: ${{ vars.< Terraform Plan用に作成したGitHub AppのAPP IDの値を設定したSecret key > }}
-          private-key: ${{ secrets.< Terraform Apply用に作成したGitHub AppのPRIVATE KEYの値を設定したSecret key > }}
+          app-id: ${{ vars.TERRAFORM_PLAN_APP_ID }}
+          private-key: ${{ secrets.TERRAFORM_PLAN_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
 
       - name: Initialize Terraform environment
         run: |
-          make prepare GITHUB_ACTIONS=true APP_ID=${{ vars.< Terraform Plan用に作成したGitHub AppのAPP IDの値を設定したSecret key > }} APP_INSTALLATION_ID=${{ vars.< Terraform Plan用に作成したGitHub AppのINSTALLATION IDの値を設定したSecret key > }}
+          make prepare GITHUB_ACTIONS=true APP_ID=${{ vars.TERRAFORM_PLAN_APP_ID }} APP_INSTALLATION_ID=${{ vars.TERRAFORM_PLAN_INSTALLATION_ID }}
 
       - name: Download Terraform state file
         id: download_state_file
@@ -80,7 +80,7 @@ jobs:
         run: |
           set +x
           echo "pem_content = <<EOT" > pem.tfvars
-          echo "${{ secrets.< Terraform Plan用に作成したGitHub AppのPRIVATE KEYの値を設定したSecret key > }}" >> pem.tfvars
+          echo "${{ secrets.TERRAFORM_PLAN_PRIVATE_KEY }}" >> pem.tfvars
           echo "EOT" >> pem.tfvars
           set -x
 
@@ -88,7 +88,7 @@ jobs:
         id: terraform_plan
         run: |
           git config --global url."https://x-access-token:${READ_REPO_TOKEN}@github.com/< Organization Name >".insteadOf "ssh://git@github.com/< Organization Name >"
-          tfcmt --config tfcmt.yml plan -- make plan GITHUB_ACTIONS=true APP_ID=${{ vars.< Terraform Plan用に作成したGitHub AppのAPP IDの値を設定したSecret key > }} APP_INSTALLATION_ID=${{ vars.< Terraform Plan用に作成したGitHub AppのINSTALLATION IDの値を設定したSecret key > }}
+          tfcmt --config tfcmt.yml plan -- make plan GITHUB_ACTIONS=true APP_ID=${{ vars.TERRAFORM_PLAN_APP_ID }} APP_INSTALLATION_ID=${{ vars.TERRAFORM_PLAN_INSTALLATION_ID }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
           READ_REPO_TOKEN: ${{ steps.generate_token.outputs.token }}
