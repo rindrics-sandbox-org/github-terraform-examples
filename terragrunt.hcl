@@ -33,3 +33,13 @@ generate "terraform" {
     }
   EOF
 }
+
+terraform {
+  extra_arguments "common_variables" {
+    commands= get_terraform_commands_that_need_vars()
+    required_var_files = [
+      "${path_relative_from_include()}/pem.tfvars",
+      "${path_relative_from_include()}/users.tfvars",
+    ]
+  }
+}

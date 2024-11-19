@@ -3,7 +3,6 @@ TFLINT ?= tflint
 DIR ?= .
 APP_ID = ""  # will be set in GitHub Actions
 APP_INSTALLATION_ID = ""  # will be set in GitHub Actions
-TERRAFORM_VARS = -var-file=pem.tfvars -var-file=users.tfvars
 TERRAFORM_PLAN_PATH = .terraform/terraform.plan
 GITHUB_ACTIONS ?= false
 
