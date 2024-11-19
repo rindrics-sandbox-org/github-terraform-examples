@@ -11,6 +11,6 @@ import {
   id = "terraform-state-files"
 }
 import {
-  to = github_membership.org_owner["< GitHub Username >"]
-  id = "rindrics-sandbox-org:< GitHub Username >"
+  to = github_membership.org_owner["Rindrics"]
+  id = "rindrics-sandbox-org:Rindrics"
 }
