@@ -36,6 +36,13 @@ jobs:
         with:
           terraform_version: ${{ steps.check.outputs.version }}
 
+      - name: Setup Terragrunt
+        run: |
+          sudo .github/workflows/get_terragrunt.sh /bin/terragrunt $TERRAGRUNT_VERSION $TERRAGRUNT_BIN_SHA256_CHECKSUM
+        env:
+          TERRAGRUNT_VERSION: v0.68.17
+          TERRAGRUNT_BIN_SHA256_CHECKSUM: a2ec458416e9560e3a7c8376818d07c5cc62abaa5627e884913b719622c1d7ae
+
       - name: Setup tfcmt
         uses: shmokmt/actions-setup-tfcmt@v2
         with:

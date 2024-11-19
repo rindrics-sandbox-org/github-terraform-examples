@@ -1,4 +1,4 @@
-TERRAFORM ?= terraform
+TERRAFORM ?= terragrunt run-all
 TFLINT ?= tflint
 DIR ?= .
 APP_ID = ""  # will be set in GitHub Actions
