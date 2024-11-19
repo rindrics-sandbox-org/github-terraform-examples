@@ -14,3 +14,36 @@ import {
   to = github_membership.org_owner["Rindrics"]
   id = "rindrics-sandbox-org:Rindrics"
 }
+
+import {
+  for_each = toset(var.repositories)
+  to       = github_repository.all_in_one[each.key]
+  id       = each.value
+}
+
+import {
+  for_each = toset(var.teams)
+  to       = github_team.all_in_one[each.key]
+  id       = each.value
+}
+
+import {
+  for_each = toset(var.teams)
+  to       = github_team_membership.all_in_one[each.key]
+  id       = "${each.value}:Rindrics"
+}
+
+import {
+  for_each = {
+    for pair in flatten([
+      for team, repos in var.team_repo_mapping : [
+        for repo in repos : {
+          team = team
+          repo = repo
+        }
+      ]
+    ]) : "${pair.team}:${pair.repo}" => pair
+  }
+  to = github_team_repository.all_in_one["${each.value.team}:${each.value.repo}"]
+  id = "${each.value.team}:${each.value.repo}"
+}
