@@ -1,7 +1,7 @@
 # Terraform Applyを実行するためのymlファイルです
 # `< Organization Name >` 部分は適切な Organization Name に置き換えてください。
 # `< tfstateファイルを管理するリポジトリの作成（ terraform-state-files ） >`部分は適切なリポジトリ名に置き換えてください。
-# `secrets.~`と`vars.〜`部分はそれぞれ適切な key に置き換えてください。
+# `secrets.~`と`vars.〜`部分はそれぞれ適切な secret 名および variable 名に置き換えてください。
 
 name: terraform-apply
 on:
