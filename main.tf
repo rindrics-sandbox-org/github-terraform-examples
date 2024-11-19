@@ -96,17 +96,6 @@ resource "github_repository" "terraform_state_files" {
   homepage_url           = null
   is_template            = false
   vulnerability_alerts   = true
-  security_and_analysis {
-    advanced_security {
-      status = "disabled"
-    }
-    secret_scanning {
-      status = "disabled"
-    }
-    secret_scanning_push_protection {
-      status = "disabled"
-    }
-  }
 }
 
 # ユーザーの GitHub Username と GitHub ID のチェック
