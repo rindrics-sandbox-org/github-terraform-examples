@@ -1,5 +1,5 @@
 generate "backend" {
-  path      = "backend.tf"
+  path      = "backend-generated.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<-EOF
     terraform {
@@ -11,7 +11,7 @@ generate "backend" {
 }
 
 generate "terraform" {
-  path      = "terraform.tf"
+  path      = "terraform-generated.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<-EOF
     terraform {
@@ -61,7 +61,7 @@ locals {
 }
 
 generate "removed" {
-  path      = "removed.tf"
+  path      = "removed-generated.tf"
   if_exists = "overwrite"
   contents = templatefile("templates/removed.tmpl", {
     team_names_map  = local.teams_removed_sanitized
