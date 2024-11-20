@@ -35,6 +35,11 @@ generate "terraform" {
 }
 
 locals {
+  vars              = read_terragrunt_config("variables.hcl")
+  repositories      = local.vars.locals.repositories
+  teams             = local.vars.locals.teams
+  team_repo_mapping = local.vars.locals.team_repo_mapping
+
   teams_removed = [
     "team-1",
   ]
@@ -59,4 +64,10 @@ terraform {
       "${path_relative_from_include()}/users.tfvars",
     ]
   }
+}
+
+inputs = {
+  repositories      = local.repositories
+  teams             = local.teams
+  team_repo_mapping = local.team_repo_mapping
 }
