@@ -13,7 +13,6 @@ locals {
   ]
 
   team_repo_mapping = {
-    "team-1" = ["foo"]
     "team-2" = ["foo", "baz"]
     "team-3" = ["foo", "bar", "baz"]
     "team-4" = ["baz"]

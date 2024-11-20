@@ -46,6 +46,18 @@ locals {
   teams_removed_sanitized = {
     for name in local.teams_removed : name => replace(name, "-", "_")
   }
+  team_repo_mapping_removed = {
+    "team-1" = ["foo"],
+  }
+  team_repo_removed_pairs = flatten([
+    for team in local.teams_removed : [
+      for repo in local.team_repo_mapping_removed[team] : {
+        team_hyphen     = team
+        team_underscore = replace(team, "-", "_")
+        repo            = repo
+      }
+    ]
+  ])
 }
 
 generate "removed" {
@@ -53,6 +65,7 @@ generate "removed" {
   if_exists = "overwrite"
   contents = templatefile("templates/removed.tmpl", {
     team_names_map  = local.teams_removed_sanitized
+    team_repo_pairs = local.team_repo_removed_pairs
   })
 }
 
