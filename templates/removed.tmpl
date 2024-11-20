@@ -1,0 +1,12 @@
+%{ for team_hyphen, team_underscore in team_names_map }
+  moved {
+    from = github_team.all_in_one["${team_hyphen}"]
+    to = github_team.all_in_one_${team_underscore}
+  }
+  removed {
+    from = github_team.all_in_one_${team_underscore}
+    lifecycle {
+      destroy = false
+    }
+  }
+%{ endfor }

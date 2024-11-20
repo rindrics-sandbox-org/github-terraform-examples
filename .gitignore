@@ -39,3 +39,4 @@ terraform.rc
 .env
 backend.tf
 terraform.tf
+removed.tf

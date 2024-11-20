@@ -34,6 +34,23 @@ generate "terraform" {
   EOF
 }
 
+locals {
+  teams_removed = [
+    "team-1",
+  ]
+  teams_removed_sanitized = {
+    for name in local.teams_removed : name => replace(name, "-", "_")
+  }
+}
+
+generate "removed" {
+  path      = "removed.tf"
+  if_exists = "overwrite"
+  contents = templatefile("templates/removed.tmpl", {
+    team_names_map  = local.teams_removed_sanitized
+  })
+}
+
 terraform {
   extra_arguments "common_variables" {
     commands = get_terraform_commands_that_need_vars()
