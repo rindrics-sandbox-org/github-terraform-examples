@@ -67,7 +67,6 @@ terraform {
 
 inputs = {
   name        = path_relative_to_include()
-  pem_content = find_in_parent_folders("pem.tfvars")
 }
 
 generate "imports" {
