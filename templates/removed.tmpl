@@ -1,0 +1,38 @@
+%{ for team_hyphen, team_underscore in team_names_map }
+  moved {
+    from = github_team.all_in_one["${team_hyphen}"]
+    to = github_team.all_in_one_${team_underscore}
+  }
+  removed {
+    from = github_team.all_in_one_${team_underscore}
+    lifecycle {
+      destroy = false
+    }
+  }
+
+  moved {
+    from = github_team_membership.all_in_one["${team_hyphen}"]
+    to = github_team_membership.all_in_one_${team_underscore}
+  }
+  removed {
+    from = github_team_membership.all_in_one_${team_underscore}
+    lifecycle {
+      destroy = false
+    }
+  }
+
+  %{ for pair in team_repo_pairs }
+    %{ if pair.team_hyphen == team_hyphen }
+      moved {
+        from = github_team_repository.all_in_one["${team_hyphen}:${pair.repo}"]
+        to = github_team_repository.all_in_one_${team_underscore}_${pair.repo}
+      }
+      removed {
+        from = github_team_repository.all_in_one_${team_underscore}_${pair.repo}
+        lifecycle {
+          destroy = false
+        }
+      }
+    %{ endif }
+  %{ endfor }
+%{ endfor }
